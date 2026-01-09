@@ -89,7 +89,7 @@ export function StepperForm({ onComplete, className }: StepperFormProps) {
 
   if (completionPhase === 'logo') {
     return (
-      <div className="flex items-center justify-center">
+      <div className="fixed inset-0 flex items-center justify-center">
         <img
           src="/logo.png"
           alt="2nd Fridays Social Club"
@@ -106,7 +106,7 @@ export function StepperForm({ onComplete, className }: StepperFormProps) {
     return (
       <div
         className={cn(
-          'flex items-center justify-center',
+          'fixed inset-0 flex items-center justify-center',
           completionPhase === 'gif' && 'animate-in fade-in duration-1000',
           completionPhase === 'gif-fading' && 'animate-fade-out'
         )}
@@ -131,7 +131,7 @@ export function StepperForm({ onComplete, className }: StepperFormProps) {
   return (
     <div
       className={cn(
-        'w-full max-w-md mx-auto p-6',
+        'w-full max-w-md mx-auto p-6 pb-32',
         completionPhase === 'form' && 'animate-in fade-in duration-1000',
         completionPhase === 'fading' && 'animate-fade-out',
         className

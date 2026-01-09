@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { StepperForm } from '@/widgets/stepper-form'
 import { Button } from '@/shared/ui/button'
+import { saveSubmission } from '@/shared/lib/services/submissions'
 
 type PagePhase = 'logo' | 'jigsaw' | 'jigsaw-fading' | 'form'
 
@@ -19,8 +20,14 @@ export function HomePage() {
     setPhase('form')
   }
 
+  const isFormPhase = phase === 'form'
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center">
+    <main
+      className={`min-h-dvh flex flex-col items-center overflow-x-hidden ${
+        isFormPhase ? 'justify-start pt-12' : 'justify-center'
+      }`}
+    >
       {phase === 'logo' && (
         <img
           src="/logo.png"
@@ -54,7 +61,7 @@ export function HomePage() {
         </div>
       )}
 
-      {phase === 'form' && <StepperForm />}
+      {phase === 'form' && <StepperForm onComplete={saveSubmission} />}
     </main>
   )
 }

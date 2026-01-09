@@ -2,9 +2,17 @@ import type { Question } from './types'
 
 export const QUESTIONS: readonly Question[] = [
   {
+    id: 'card-location',
+    text: 'Where did you find our card?',
+    position: 1,
+    type: 'text',
+    placeholder: 'Your answer',
+    required: true,
+  },
+  {
     id: 'drinks',
     text: 'When going out, how many drinks is a good time?',
-    position: 1,
+    position: 2,
     type: 'text',
     placeholder: 'Enter a number',
     inputMode: 'numeric',
@@ -13,7 +21,7 @@ export const QUESTIONS: readonly Question[] = [
   {
     id: 'wine-tasting',
     text: 'Pretend you just did a tasting for a new glass of wine, give us the tasting notes',
-    position: 2,
+    position: 3,
     type: 'textarea',
     placeholder: 'Describe the wine...',
     rows: 4,
@@ -22,7 +30,7 @@ export const QUESTIONS: readonly Question[] = [
   {
     id: 'walkout-song',
     text: "What's your MLB walkout song?",
-    position: 3,
+    position: 4,
     type: 'text',
     placeholder: 'Song title',
     required: true,
@@ -30,7 +38,7 @@ export const QUESTIONS: readonly Question[] = [
   {
     id: 'nickname',
     text: 'Middle name + Street you grew up on?',
-    position: 4,
+    position: 5,
     type: 'text',
     placeholder: 'Your answer',
     required: true,
@@ -38,7 +46,7 @@ export const QUESTIONS: readonly Question[] = [
   {
     id: 'phone',
     text: 'Cell Phone Number',
-    position: 5,
+    position: 6,
     type: 'phone',
     placeholder: '(555) 123-4567',
     required: true,
