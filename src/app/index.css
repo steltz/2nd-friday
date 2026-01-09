@@ -71,3 +71,14 @@
     overflow-x: hidden;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-slide-up-enter,
+  .animate-fade-out,
+  .animate-slide-down-enter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

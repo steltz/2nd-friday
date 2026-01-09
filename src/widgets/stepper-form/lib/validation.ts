@@ -78,6 +78,8 @@ export function validateAnswer(value: string, question: Question): ValidationRes
         minLength: question.minLength,
         maxLength: question.maxLength,
       })
+    case 'textarea':
+      return validateText(value)
     default: {
       const _exhaustive: never = question
       return _exhaustive
