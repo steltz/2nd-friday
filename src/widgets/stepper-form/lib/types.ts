@@ -6,7 +6,7 @@
 // Question Types
 // =============================================================================
 
-export type QuestionType = 'yes-no' | 'text' | 'phone'
+export type QuestionType = 'yes-no' | 'text' | 'phone' | 'textarea'
 
 export interface BaseQuestion {
   id: string
@@ -25,6 +25,7 @@ export interface TextQuestion extends BaseQuestion {
   placeholder?: string
   minLength?: number
   maxLength?: number
+  inputMode?: 'text' | 'numeric' | 'decimal' | 'tel' | 'email' | 'url'
 }
 
 export interface PhoneQuestion extends BaseQuestion {
@@ -32,7 +33,13 @@ export interface PhoneQuestion extends BaseQuestion {
   placeholder: string
 }
 
-export type Question = YesNoQuestion | TextQuestion | PhoneQuestion
+export interface TextareaQuestion extends BaseQuestion {
+  type: 'textarea'
+  placeholder?: string
+  rows?: number
+}
+
+export type Question = YesNoQuestion | TextQuestion | PhoneQuestion | TextareaQuestion
 
 // =============================================================================
 // Answer Types

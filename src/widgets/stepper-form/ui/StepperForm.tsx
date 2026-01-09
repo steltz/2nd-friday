@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 import { useStepperForm } from '../hooks/useStepperForm'
 import { ProgressIndicator } from './ProgressIndicator'
@@ -30,6 +30,8 @@ export function StepperForm({ onComplete, className }: StepperFormProps) {
     isLastQuestion,
   } = useStepperForm()
 
+  const [completionPhase, setCompletionPhase] = useState<'form' | 'fading' | 'gif' | 'gif-fading' | 'logo'>('form')
+
   const currentAnswer = answers[currentQuestion.id] ?? ''
   const validationError = state.validation.errorMessage
 
@@ -48,6 +50,12 @@ export function StepperForm({ onComplete, className }: StepperFormProps) {
     }
   }, [isComplete, onComplete, answers])
 
+  useEffect(() => {
+    if (isComplete && completionPhase === 'form') {
+      setCompletionPhase('fading')
+    }
+  }, [isComplete, completionPhase])
+
   const handleNext = () => {
     if (isLastQuestion) {
       submit()
@@ -65,18 +73,57 @@ export function StepperForm({ onComplete, className }: StepperFormProps) {
     }
   }
 
-  if (isComplete) {
+  const handleFormFadeOutEnd = () => {
+    setCompletionPhase('gif')
+  }
+
+  const handleGifFadeInEnd = () => {
+    setTimeout(() => {
+      setCompletionPhase('gif-fading')
+    }, 3000)
+  }
+
+  const handleGifFadeOutEnd = () => {
+    setCompletionPhase('logo')
+  }
+
+  if (completionPhase === 'logo') {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center">
+        <img
+          src="/logo.png"
+          alt="2nd Fridays Social Club"
+          className="max-w-xs w-auto h-auto animate-slide-down-enter"
+          onError={(e) => {
+            e.currentTarget.style.display = 'none'
+          }}
+        />
+      </div>
+    )
+  }
+
+  if (completionPhase === 'gif' || completionPhase === 'gif-fading') {
     return (
       <div
         className={cn(
-          'w-full max-w-md mx-auto p-6 animate-slide-up-enter',
-          className
+          'fixed inset-0 flex items-center justify-center',
+          completionPhase === 'gif' && 'animate-in fade-in duration-1000',
+          completionPhase === 'gif-fading' && 'animate-fade-out'
         )}
+        onAnimationEnd={
+          completionPhase === 'gif'
+            ? handleGifFadeInEnd
+            : handleGifFadeOutEnd
+        }
       >
-        <div className="text-center">
-          <h2 className="text-2xl font-semibold mb-2">Thank you!</h2>
-          <p className="text-muted-foreground">Your responses have been submitted.</p>
-        </div>
+        <img
+          src="/good_luck.gif"
+          alt="Good luck"
+          className="max-w-xs w-auto h-auto"
+          onError={(e) => {
+            e.currentTarget.style.display = 'none'
+          }}
+        />
       </div>
     )
   }
@@ -84,9 +131,12 @@ export function StepperForm({ onComplete, className }: StepperFormProps) {
   return (
     <div
       className={cn(
-        'w-full max-w-md mx-auto p-6 animate-slide-up-enter',
+        'w-full max-w-md mx-auto p-6 pb-32',
+        completionPhase === 'form' && 'animate-in fade-in duration-1000',
+        completionPhase === 'fading' && 'animate-fade-out',
         className
       )}
+      onAnimationEnd={completionPhase === 'fading' ? handleFormFadeOutEnd : undefined}
     >
       <ProgressIndicator
         current={state.currentStep + 1}
